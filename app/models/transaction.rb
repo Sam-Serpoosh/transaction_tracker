@@ -5,7 +5,7 @@ class Transaction < ActiveRecord::Base
   validates :category, :presence => true
   validates :price, :presence => true
 
-  def initialize(attr)
+  def initialize(attr={})
     super(attr)
     self.day = Date.today
   end
