@@ -20,18 +20,16 @@ describe TransactionsController do
   describe "creating" do
     context "#invalid transaction" do
       it "does not create it" do
-        post :create, :transaction => {}
-        response.should render_template("new")
+        lambda do
+          post :create, :transaction => {}
+          response.should render_template("new")
+        end.should_not change(Transaction, :count)
       end
     end
 
     context "#valid transaction" do
       it "creates it" do
-        attributes = {
-                       :name => "shopping",
-                       :category => "grocery",
-                       :price => 10
-                     }
+        attributes = { :name => "shopping", :category => "grocery", :price => 10 }
         lambda do
           post :create, :transaction => attributes
           response.should redirect_to(assigns(:transaction))
