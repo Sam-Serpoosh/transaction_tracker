@@ -36,4 +36,21 @@ describe Transaction do
       tr.day.should == Date.today
     end
   end
+
+  context "#validations" do
+    it "is not valid without a name" do
+      tr = Transaction.new(attr.merge(:name => ""))
+      tr.should_not be_valid
+    end
+
+    it "is not valid without a category" do
+      tr = Transaction.new(attr.merge(:category => ""))
+      tr.should_not be_valid
+    end
+
+    it "is not valid withouth a price" do
+      tr = Transaction.new(attr.merge(:price => ""))
+      tr.should_not be_valid
+    end
+  end
 end
