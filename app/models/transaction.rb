@@ -9,4 +9,8 @@ class Transaction < ActiveRecord::Base
     super(attr)
     self.day = Date.today
   end
+
+  def to_s
+    "#{self.name}-#{self.category}"
+  end
 end

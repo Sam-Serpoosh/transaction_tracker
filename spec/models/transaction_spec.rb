@@ -52,5 +52,19 @@ describe Transaction do
       tr = Transaction.new(attr.merge(:price => ""))
       tr.should_not be_valid
     end
+
+    it "is valid with name, price and category" do
+      tr = Transaction.new(attr)
+      tr.should be_valid
+    end
+  end
+
+  context "#to_s" do
+    it "is a combination of name and category" do
+      name, category = "shopping", "grocery"
+      tr = Transaction.new(attr.merge(:name => name, 
+                                      :category => category))
+      tr.to_s.should == "#{name}-#{category}"
+    end
   end
 end
