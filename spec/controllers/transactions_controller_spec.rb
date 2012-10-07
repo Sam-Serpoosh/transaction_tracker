@@ -58,4 +58,47 @@ describe TransactionsController do
       end
     end
   end
+
+  describe "editing" do
+    it "finds the appropriate transaction for editing" do
+      Transaction.stub(:find).with("1") { stub }
+      get :edit, :id => 1
+      assigns(:transaction).should_not be_nil
+    end
+  end
+
+  describe "updating" do
+    let(:attr) do 
+      {
+        :name => "shopping",
+        :category => "grocery",
+        :store => "7-Eleven",
+        :price => 10
+      }
+    end
+
+    before do
+      @transaction = Transaction.new(attr)
+      @transaction.save!
+    end
+
+    context "#valid updating" do
+      it "updates and redirects to the transaction show page" do
+        new_name = "updated shopping"
+        put :update, :id => @transaction.id, :transaction => attr.merge(:name => new_name)
+        @transaction.reload
+        @transaction.name.should == new_name 
+        flash[:success].should =~ /updated/i
+        response.should redirect_to(@transaction)
+      end
+
+      context "#invalid updating" do
+        it "doesn't update the transaction" do
+          put :update, :id => @transaction.id, :transaction => attr.merge(:name => "")
+          flash.now[:error].should =~ /invalid/i
+          response.should render_template("edit")
+        end
+      end
+    end
+  end
 end
