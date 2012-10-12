@@ -80,9 +80,10 @@ describe TransactionsController do
         put :update, :id => @transaction.id, 
             :transaction => 
                 attr.merge(:name => new_name)
-
         @transaction.reload
+
         @transaction.name.should == new_name
+        flash[:success].should =~ /updated/i
         response.should redirect_to(assigns(:transaction))
       end
 
