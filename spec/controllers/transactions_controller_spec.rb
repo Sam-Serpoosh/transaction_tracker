@@ -1,24 +1,12 @@
 require "spec_helper"
 
 describe TransactionsController do
-  render_views # get rid of this and move to view tests!
-
   describe "listing" do
     it "fetches all the transactions" do
       all_transactions = [stub, stub]
       Transaction.stub(:all => all_transactions)
       get :index
       assigns(:transactions).should == all_transactions
-    end
-
-    it "list the transactions links" do
-      all_transactions = [
-                          stub(:to_s => "shopping-grocery"),
-                          stub(:to_s => "hair cut-style")
-                         ]
-      Transaction.stub(:all => all_transactions)
-      get :index
-      response.should have_selector("a", :content => "shopping-grocery")
     end
   end
    
@@ -50,7 +38,11 @@ describe TransactionsController do
 
     context "#valid transaction" do
       it "creates it" do
-        attributes = { :name => "shopping", :category => "grocery", :price => 10 }
+        attributes = { 
+                       :name => "shopping", 
+                       :category => "grocery", 
+                       :price => 10 
+                     }
         lambda do
           post :create, :transaction => attributes
           response.should redirect_to(assigns(:transaction))
@@ -83,18 +75,21 @@ describe TransactionsController do
     end
 
     context "#valid updating" do
-      it "updates and redirects to the transaction show page" do
+      it "updates the transaction" do
         new_name = "updated shopping"
-        put :update, :id => @transaction.id, :transaction => attr.merge(:name => new_name)
+        put :update, :id => @transaction.id, 
+            :transaction => 
+                attr.merge(:name => new_name)
+
         @transaction.reload
-        @transaction.name.should == new_name 
-        flash[:success].should =~ /updated/i
-        response.should redirect_to(@transaction)
+        @transaction.name.should == new_name
+        response.should redirect_to(assigns(:transaction))
       end
 
       context "#invalid updating" do
         it "doesn't update the transaction" do
-          put :update, :id => @transaction.id, :transaction => attr.merge(:name => "")
+          put :update, :id => @transaction.id, 
+              :transaction => attr.merge(:name => "")
           flash.now[:error].should =~ /invalid/i
           response.should render_template("edit")
         end

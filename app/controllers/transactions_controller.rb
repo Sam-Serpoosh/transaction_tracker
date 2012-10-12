@@ -13,8 +13,7 @@ class TransactionsController < ApplicationController
   end
 
   def create
-    @transaction = Transaction.new(params[:transaction])
-    if @transaction.save
+    if created?
       flash[:success] = "Created a new Transaction."
       redirect_to @transaction
     else
@@ -26,7 +25,7 @@ class TransactionsController < ApplicationController
   def edit; end
 
   def update
-    if @transaction.update_attributes(params[:transaction])
+    if updated? 
       flash[:success] = "Transaction updated."
       redirect_to @transaction
     else
@@ -39,5 +38,14 @@ class TransactionsController < ApplicationController
 
     def find_transaction
       @transaction = Transaction.find(params[:id])
+    end
+
+    def created?
+      @transaction = Transaction.new(params[:transaction])
+      @transaction.save
+    end
+
+    def updated?
+      @transaction.update_attributes(params[:transaction])
     end
 end
