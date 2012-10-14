@@ -97,4 +97,14 @@ describe TransactionsController do
       end
     end
   end
+
+  describe "current month transactions" do
+    it "assigns the current month transactions" do
+      current_month_tr = [stub, stub]
+      CurrentMonthTransactions.stub(:get_transactions) { current_month_tr }
+      get :current_month_transactions
+      assigns(:transactions).should == current_month_tr
+      response.should render_template("index")
+    end
+  end
 end

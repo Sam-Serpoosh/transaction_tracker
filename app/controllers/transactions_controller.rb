@@ -34,6 +34,11 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def current_month_transactions
+    @transactions = CurrentMonthTransactions.get_transactions
+    render :action => :index
+  end
+
   private
 
     def find_transaction

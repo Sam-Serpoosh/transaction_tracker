@@ -1,7 +1,9 @@
 <header>
+  <%= link_to logo, transactions_path %>
   <nav class="round">
     <ul>
         <li><%= link_to "Transactions", transactions_path %></li>
+        <li><%= link_to "Current Month", current_month_transactions_path %></li>
         <li><%= link_to "Home", transactions_path %></li>
     </ul>
   </nav>
