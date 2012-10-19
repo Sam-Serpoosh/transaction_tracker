@@ -10,7 +10,14 @@ class Transaction < ActiveRecord::Base
     self.day = Date.today
   end
 
+  def self.categorize
+    categorized = all.group_by { |tr| tr.category }
+  end
+
   def to_s
     "#{self.name}-#{self.category}"
   end
 end
+
+#      Transaction.all(:group => "category").collect do |c| 
+#      [c.category, Transaction.sum("price", :conditions => "category='#{c.category}'")]
