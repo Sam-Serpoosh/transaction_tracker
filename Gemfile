@@ -14,5 +14,7 @@ group :test do
   gem 'webrat', '0.7.2'
 end
 
+gem 'rmagick'
+gem 'gruff'
 gem 'jquery-rails'
 gem 'therubyracer'
