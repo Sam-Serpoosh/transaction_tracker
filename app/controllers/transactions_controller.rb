@@ -46,11 +46,13 @@ class TransactionsController < ApplicationController
     end
 
     def created?
-      @transaction = Transaction.new(params[:transaction])
+      attributes = DowncaseCategory.downcase(params[:transaction])
+      @transaction = Transaction.new(attributes)
       @transaction.save
     end
 
     def updated?
-      @transaction.update_attributes(params[:transaction])
+      attributes = DowncaseCategory.downcase(params[:transaction])
+      @transaction.update_attributes(attributes)
     end
 end

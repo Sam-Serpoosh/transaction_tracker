@@ -1,8 +1,19 @@
-<%= link_to "New Transaction", new_transaction_path %>
-<ul class="all-transactions">
-  <% @transactions.each do |transaction| %>
-    <li class="transaction">
-    <%= link_to transaction, transaction_path(transaction) %>
-    </li>
-  <% end %>
-</ul>
+<table summary="list of transactions">
+  <tr>
+    <td>
+      <%= link_to "New Transaction", new_transaction_path %>
+      <ul class="all-transactions">
+        <% @transactions.each do |transaction| %>
+          <li class="transaction">
+          <%= link_to transaction, transaction_path(transaction) %>
+          </li>
+        <% end %>
+      </ul>
+    </td>
+    <td class="chart">
+      <% if !@transactions.nil? && !@transactions.empty? %>
+        <%= draw_payment_per_category_chart(@transactions) %>
+      <% end %>
+    </td>
+  </tr>
+</table>

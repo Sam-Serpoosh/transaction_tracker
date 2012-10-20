@@ -6,7 +6,7 @@ describe TotalPaymentPerCategory do
     tr = stub(:price => 10)
     categorized_transactions = { "food" => [tr] }
     payment_per_category = TotalPaymentPerCategory.
-      calculate(categorized_transactions)
+      calculate_categorized(categorized_transactions)
     payment_per_category.should == { :food => 10 }
   end
 
@@ -19,10 +19,19 @@ describe TotalPaymentPerCategory do
                                  "grocery" => [tr3]
                                }
     payment_per_category = TotalPaymentPerCategory.
-      calculate(categorized_transactions)
+      calculate_categorized(categorized_transactions)
     payment_per_category.should == { 
                                      :food => 15, 
                                      :grocery => 20
                                    }
+  end
+
+  it "gives the total payment for categories" do
+    tr1 = stub(:price => 10, :category => "food")
+    tr2 = stub(:price => 5, :category => "grocery")
+    transactions = [tr1, tr2]
+    payment_per_category = TotalPaymentPerCategory.
+      calculate(transactions)
+    payment_per_category.should == { :food => 10, :grocery => 5 }
   end
 end

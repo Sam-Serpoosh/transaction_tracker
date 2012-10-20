@@ -3,7 +3,7 @@
 }
 
 body {
-  background: #cff;
+  background: #34282C;
 }
 
 body.centerscreen {
@@ -16,7 +16,7 @@ header {
 
 header img {
   padding: 1em;
-  background: #fff;
+  background: #34282C;
 }
 
 section {
@@ -29,24 +29,24 @@ section {
 /* Links */
 
 a {
-  color: #09c;
-  text-decoration: none;
+  color: #000000;
+  text-decoration: underline;
 }
 
 a:hover {
-  color: #069;
+  color: #000000;
   text-decoration: underline;
 }
 
 a:visited {
-  color: #069;
+  color: #000000;
 }
 
 /* Navigation */
 
 nav {
   float: right;
-  background: white;
+  background: #fff;
   padding: 0 0.7em;
   white-space: nowrap;
 }
@@ -68,7 +68,7 @@ nav ul li a {
 }
 
 nav ul li a:visited {
-  color: #09c;
+  color: #000000;
 }
 
 nav ul li a:hover {
@@ -142,4 +142,8 @@ div.field, div.actions {
 
 li.transaction {
   list-style-type: none;
+}
+
+td.chart {
+  padding: 50px 50px 50px 50px;
 }

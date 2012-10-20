@@ -10,10 +10,6 @@ class Transaction < ActiveRecord::Base
     self.day = Date.today
   end
 
-  def self.categorize
-    categorized = all.group_by { |tr| tr.category }
-  end
-
   def to_s
     "#{self.name}-#{self.category}"
   end

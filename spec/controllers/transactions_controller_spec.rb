@@ -9,7 +9,7 @@ describe TransactionsController do
       assigns(:transactions).should == all_transactions
     end
   end
-   
+
   describe "showing" do
     it "fetches the appropriate transaction" do
       transaction = stub.as_null_object
@@ -37,16 +37,24 @@ describe TransactionsController do
     end
 
     context "#valid transaction" do
+      let(:attributes) do
+        {
+          :name => "shopping", 
+          :category => "GroCery", 
+          :price => 10 
+        }
+      end
+
       it "creates it" do
-        attributes = { 
-                       :name => "shopping", 
-                       :category => "grocery", 
-                       :price => 10 
-                     }
         lambda do
           post :create, :transaction => attributes
           response.should redirect_to(assigns(:transaction))
         end.should change(Transaction, :count).by 1
+      end
+
+      it "downcases the category before creation" do
+        post :create, :transaction => attributes
+        assigns(:transaction).category.should == "grocery"
       end
     end
   end
@@ -63,7 +71,7 @@ describe TransactionsController do
     let(:attr) do 
       {
         :name => "shopping",
-        :category => "grocery",
+        :category => "GroCerY",
         :store => "7-Eleven",
         :price => 10
       }
@@ -78,8 +86,8 @@ describe TransactionsController do
       it "updates the transaction" do
         new_name = "updated shopping"
         put :update, :id => @transaction.id, 
-            :transaction => 
-                attr.merge(:name => new_name)
+          :transaction => 
+        attr.merge(:name => new_name)
         @transaction.reload
 
         @transaction.name.should == new_name
@@ -87,13 +95,20 @@ describe TransactionsController do
         response.should redirect_to(assigns(:transaction))
       end
 
-      context "#invalid updating" do
-        it "doesn't update the transaction" do
-          put :update, :id => @transaction.id, 
-              :transaction => attr.merge(:name => "")
-          flash.now[:error].should =~ /invalid/i
-          response.should render_template("edit")
-        end
+      it "downcases the category before updating" do
+        put :update, :id => @transaction.id, 
+          :transaction => attr
+        @transaction.reload
+        @transaction.category.should == "grocery"
+      end
+    end
+
+    context "#invalid updating" do
+      it "doesn't update the transaction" do
+        put :update, :id => @transaction.id, 
+          :transaction => attr.merge(:name => "")
+        flash.now[:error].should =~ /invalid/i
+        response.should render_template("edit")
       end
     end
   end

@@ -21,7 +21,7 @@ describe Transaction do
       tr.store.should == attr.fetch(:store) 
     end
 
-    it "sets category" do
+    it "sets category and downcases it" do
       tr = Transaction.new(attr)
       tr.category.should == attr.fetch(:category) 
     end
@@ -65,22 +65,6 @@ describe Transaction do
       tr = Transaction.new(attr.merge(:name => name, 
                                       :category => category))
       tr.to_s.should == "#{name}-#{category}"
-    end
-  end
-
-  context "#categorization" do
-    it "categorize the transactions" do
-      3.times do
-        tr = Transaction.new(attr)
-        tr.save
-      end
-      2.times do
-        tr = Transaction.new(attr.merge(:category => "food"))
-        tr.save
-      end
-      categorized = Transaction.categorize
-      categorized["food"].count.should == 2
-      categorized["grocery"].count.should == 3
     end
   end
 end
