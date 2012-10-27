@@ -10,6 +10,7 @@ group :assets do
 end
 
 group :test do
+  gem 'sqlite3'
   gem 'rspec-rails'
   gem 'webrat', '0.7.2'
 end

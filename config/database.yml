@@ -7,9 +7,14 @@ development:
   password:
 
 test:
-  adapter: postgresql
-  encoding: unicode
-  database: transaction_test
+  adapter: sqlite3
+  database: db/test.sqlite3
   pool: 5
-  username: jesus
-  password:
+  timeout: 5000
+#test:
+#  adapter: postgresql
+#  encoding: unicode
+#  database: transaction_test
+#  pool: 5
+#  username: jesus
+#  password:
